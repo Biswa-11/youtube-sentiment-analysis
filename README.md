@@ -36,8 +36,8 @@ https://script.google.com/u/0/home/projects/1zggWmt60gNVbFEvg_V9tE2iXnOcH7NW_eyd
 - Example use case: Predicting trailer success and box-office impact.
 
 ## Future Improvements
-Multilingual Support – Detect and translate non-English comments into English before analysis.
-Advanced Models – Experiment with LLM-based sentiment classifiers (e.g., GPT fine-tuning).
-Trend Analysis – Track sentiment changes over time (e.g., before/after movie release).
-Aspect-Based Sentiment – Identify which aspects (actors, music, VFX, story) audiences mention positively or negatively.
-Deployment – Build a Flask/Streamlit web app to analyze new trailer comments in real time.
+- Multilingual Support – Detect and translate non-English comments into English before analysis.
+- Advanced Models – Experiment with LLM-based sentiment classifiers (e.g., GPT fine-tuning).
+- Trend Analysis – Track sentiment changes over time (e.g., before/after movie release).
+- Aspect-Based Sentiment – Identify which aspects (actors, music, VFX, story) audiences mention positively or negatively.
+- Deployment – Build a Flask/Streamlit web app to analyze new trailer comments in real time.
