@@ -1,0 +1,12 @@
+better_profanity==0.7.0
+Flask==3.1.3
+flask_caching==2.4.1
+google_api_python_client==2.194.0
+googletrans==4.0.0rc1
+langdetect==1.0.9
+matplotlib==3.11.1
+nltk==3.9.4
+torch==2.5.1+cu121
+transformers==4.57.6
+wordcloud==1.9.6
+python-dotenv

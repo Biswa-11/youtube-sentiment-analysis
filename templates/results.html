@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="resultsTop" class="card video-card">
+    <div class="video-layout">
+        <img src="{{ video_info.thumbnail_url }}" alt="Thumbnail" class="video-thumb">
+        <div>
+            <h2>{{ video_info.title }}</h2>
+            <p class="muted">{{ video_info.channel }}</p>
+            <div class="metric-pills">
+                <span class="pill">Views: {{ video_info.views }}</span>
+                <span class="pill">Likes: {{ video_info.likes }}</span>
+                <span class="pill">Total Comments: {{ video_info.total_comments }}</span>
+                <span class="pill">Analyzed Comments: {{ analyzed_comments|length }}</span>
+            </div>
+            <p class="muted">Published: {{ video_info.published_at }}</p>
+            {% if spam_count > 0 %}
+                <p class="warning-badge">⚠ {{ spam_count }} spam comments detected and removed</p>
+            {% endif %}
+            {% if translation_failed_count > 0 %}
+                <p class="warning-badge">⚠ {{ translation_failed_count }} comments could not be translated and were analyzed in original text</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="summary-grid">
+    <article class="metric-card card">
+        <h3 class="positive">Positive Comments</h3>
+        <p class="metric-number">{{ summary.positive_count }}</p>
+    </article>
+    <article class="metric-card card">
+        <h3 class="negative">Negative Comments</h3>
+        <p class="metric-number">{{ summary.negative_count }}</p>
+    </article>
+    <article class="metric-card card">
+        <h3 class="neutral">Neutral Comments</h3>
+        <p class="metric-number">{{ summary.neutral_count }}</p>
+    </article>
+</section>
+
+<section class="card verdict-wrap">
+    <span class="verdict">Overall: {{ summary.overall_sentiment }}</span>
+</section>
+
+<section class="card chart-wrap">
+    <h3>Sentiment Distribution</h3>
+    <div
+        id="sentimentChartData"
+        data-positive="{{ summary.positive_count }}"
+        data-negative="{{ summary.negative_count }}"
+        data-neutral="{{ summary.neutral_count }}"
+        data-positive-percent="{{ summary.positive_percent }}"
+        data-negative-percent="{{ summary.negative_percent }}"
+        data-neutral-percent="{{ summary.neutral_percent }}"
+    ></div>
+    <div class="chart-canvas-wrap">
+        <canvas id="sentimentPieChart" aria-label="Sentiment distribution pie chart"></canvas>
+    </div>
+    <p>
+        Positive: {{ summary.positive_percent }}% |
+        Negative: {{ summary.negative_percent }}% |
+        Neutral: {{ summary.neutral_percent }}%
+    </p>
+</section>
+
+<section class="card chart-wrap">
+    <h3>Sentiment Over Time</h3>
+    <img src="data:image/png;base64,{{ timeline_chart_b64 }}" alt="Sentiment Timeline Chart" class="chart-image">
+    <p class="muted">Sentiment trend over time based on comment dates</p>
+</section>
+
+<section class="card">
+    <h3>Most Used Words in Comments</h3>
+    {% if wordcloud_path %}
+        <img src="{{ url_for('static', filename='images/wordcloud.png') }}" alt="Word Cloud" class="chart-image">
+    {% else %}
+        <p class="muted">Word cloud could not be generated for this video.</p>
+    {% endif %}
+</section>
+
+<section class="card">
+    <button class="accordion-toggle" type="button">Top 5 Positive Comments</button>
+    <div class="accordion-content">
+        {% for comment in top_positive %}
+            <article class="comment-item">
+                <p>{{ comment.translated_text or comment.text }}</p>
+                <p class="muted">By {{ comment.author }} | 👍 {{ comment.likes }}</p>
+                <span class="badge positive">positive</span>
+                <button class="copy-btn" data-copy="{{ comment.translated_text or comment.text }}">Copy</button>
+            </article>
+        {% else %}
+            <p class="muted">No positive comments found.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="card">
+    <button class="accordion-toggle" type="button">Top 5 Negative Comments</button>
+    <div class="accordion-content">
+        {% for comment in top_negative %}
+            <article class="comment-item">
+                <p>{{ comment.translated_text or comment.text }}</p>
+                <p class="muted">By {{ comment.author }} | 👍 {{ comment.likes }}</p>
+                <span class="badge negative">negative</span>
+                <button class="copy-btn" data-copy="{{ comment.translated_text or comment.text }}">Copy</button>
+            </article>
+        {% else %}
+            <p class="muted">No negative comments found.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="center">
+    <a href="{{ url_for('index') }}" class="btn-primary">Analyze Another Video</a>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero card">
+    <h1>Analyze YouTube Comments Instantly</h1>
+    <p>Understand what viewers really think — powered by AI sentiment analysis</p>
+
+    <form id="analyzeForm" action="{{ url_for('analyze') }}" method="post" class="analyze-form">
+        <input
+            type="url"
+            id="video_url"
+            autoComplete="off"
+            name="video_url"
+            class="url-input"
+            placeholder="Paste YouTube URL here..."
+            required
+        >
+        <p class="hint">Example: https://www.youtube.com/watch?v=j903ASEDWxc</p>
+        <button type="submit" id="analyzeBtn" class="btn-primary btn-lg">Analyze</button>
+
+        <div id="loadingContainer" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Fetching comments and analyzing sentiment... This may take few seconds please wait...</p>
+            <div class="progress-bar-wrap">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <p id="elapsedTime" class="elapsed-time">Elapsed: 0s</p>
+        </div>
+    </form>
+</section>
+
+<section class="feature-grid">
+    <article class="card feature-card">
+        <h3>Sentiment Analysis</h3>
+        <!--<p>Fast VADER-based scoring with clear positive/negative/neutral thresholds.</p>-->
+    </article>
+    <article class="card feature-card">
+        <h3>Spam Detection</h3>
+        <!--<p>Rule-based filtering removes noisy bot and promotional comments.</p>-->
+    </article>
+    <article class="card feature-card">
+        <h3>Multilingual Support</h3>
+        <!--<p>Auto language detection and translation before sentiment scoring.</p>-->
+    </article>
+</section>
+{% endblock %}
