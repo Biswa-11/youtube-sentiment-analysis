@@ -1,8 +1,0 @@
-torch
-transformers
-nltk
-vaderSentiment
-matplotlib
-wordcloud
-pandas
-
